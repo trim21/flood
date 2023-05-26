@@ -31,3 +31,4 @@ jobs:
       - run: pnpm i
       - run: pnpm run build
       - run: pnpm run start -- --help
+        timeout-minutes: 1
