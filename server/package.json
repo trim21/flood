@@ -29,24 +29,6 @@
     "README.md",
     "SECURITY.md"
   ],
-  "bin": {
-    "flood": "dist/index.js"
-  },
-  "pkg": {
-    "assets": [
-      "dist/assets/**/*",
-      "dist/geoip-country.dat",
-      "dist/geoip-country6.dat"
-    ],
-    "targets": [
-      "node14-linuxstatic-x64",
-      "node14-linuxstatic-arm64",
-      "node14-macos-x64",
-      "node14-macos-arm64",
-      "node14-win-x64",
-      "node14-win-arm64"
-    ]
-  },
   "scripts": {
     "build": "NODE_ENV=production webpack -c ./config/webpack.config.prod.js --mode production",
     "build-pkg": "rm -rf dist && npm run build && pkg . --out-path dist-pkg",
@@ -66,6 +48,9 @@
     "geoip-country": "^4.1.58"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-typescript": "^7.21.5",
     "@seald-io/nedb": "^3.1.0",
     "@types/bencode": "^2.0.1",
     "@types/body-parser": "^1.19.2",
