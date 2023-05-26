@@ -31,6 +31,6 @@
       "@shared/*": ["shared/*"]
     }
   },
-  "include": [],
+  "include": ["./server/**/*.ts", "./client/**/*.ts", "./client/**/*.tsx", "./shared/**/*.ts"],
   "exclude": ["**/node_modules/**"]
 }
