@@ -4,10 +4,10 @@ import {Trans} from '@lingui/react';
 import {Checkbox} from '@client/ui';
 import {Error} from '@client/ui/icons';
 import SettingStore from '@client/stores/SettingStore';
-import TorrentListColumns from '@client/constants/TorrentListColumns';
+import TorrentListColumns from '@shared/constants/TorrentListColumns';
 
 import type {FloodSettings} from '@shared/types/FloodSettings';
-import type {TorrentListColumn} from '@client/constants/TorrentListColumns';
+import type {TorrentListColumn} from '@shared/constants/TorrentListColumns';
 
 import SortableList from '../../../general/SortableList';
 import Tooltip from '../../../general/Tooltip';

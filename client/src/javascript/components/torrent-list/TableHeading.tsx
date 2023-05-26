@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import {Trans, useLingui} from '@lingui/react';
 import {useEnsuredForwardedRef} from 'react-use';
 
-import TorrentListColumns, {TorrentListColumn} from '../../constants/TorrentListColumns';
+import TorrentListColumns, {TorrentListColumn} from '@shared/constants/TorrentListColumns';
 import SettingStore from '../../stores/SettingStore';
 import UIStore from '../../stores/UIStore';
 

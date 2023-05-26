@@ -2,11 +2,11 @@ import {FC, useRef} from 'react';
 
 import SettingStore from '@client/stores/SettingStore';
 import ToggleList from '@client/components/general/ToggleList';
-import TorrentContextMenuActions from '@client/constants/TorrentContextMenuActions';
+import TorrentContextMenuActions from '@shared/constants/TorrentContextMenuActions';
 
 import defaultFloodSettings from '@shared/constants/defaultFloodSettings';
 
-import type {TorrentContextMenuAction} from '@client/constants/TorrentContextMenuActions';
+import type {TorrentContextMenuAction} from '@shared/constants/TorrentContextMenuActions';
 
 import type {FloodSettings} from '@shared/types/FloodSettings';
 

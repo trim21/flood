@@ -10,16 +10,14 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "baseUrl": "../",
+    "baseUrl": "./",
+    "rootDir": "../",
     "paths": {
       "@shared/*": ["../shared/*"]
     },
+    "types": ["node"],
     "outDir": "./dist"
   },
-  "references": [
-    {
-      "path": "../shared/"
-    }
-  ],
-  "include": ["./**/*.ts", "../shared/**/*.ts", "../config.js", "../shared/config.ts"]
+  "include": ["./**/*.ts", "../shared/**/*.ts", "../package.json"],
+  "exclude": ["./**/*.test.ts"]
 }

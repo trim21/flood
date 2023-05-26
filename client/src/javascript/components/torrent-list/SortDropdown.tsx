@@ -6,9 +6,9 @@ import SortDirections from '@client/constants/SortDirections';
 import type {FloodSettings} from '@shared/types/FloodSettings';
 
 import Dropdown from '../general/form-elements/Dropdown';
-import TorrentListColumns from '../../constants/TorrentListColumns';
+import TorrentListColumns from '@shared/constants/TorrentListColumns';
 
-import type {TorrentListColumn} from '../../constants/TorrentListColumns';
+import type {TorrentListColumn} from '@shared/constants/TorrentListColumns';
 
 const SORT_PROPERTIES = [
   'name',

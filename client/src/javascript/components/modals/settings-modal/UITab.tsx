@@ -2,10 +2,10 @@ import {FC, useState} from 'react';
 import {Trans, useLingui} from '@lingui/react';
 
 import {Form, FormRow, Select, SelectItem, Radio} from '@client/ui';
-import Languages from '@client/constants/Languages';
+import Languages from '@shared/constants/Languages';
 import SettingStore from '@client/stores/SettingStore';
 
-import type {Language} from '@client/constants/Languages';
+import type {Language} from '@shared/constants/Languages';
 
 import type {FloodSettings} from '@shared/types/FloodSettings';
 

@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import yargs from 'yargs/yargs';
+import yargs from 'yargs';
 
 import {configSchema} from '@shared/schema/Config';
 

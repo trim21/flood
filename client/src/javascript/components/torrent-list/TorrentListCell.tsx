@@ -29,7 +29,7 @@ import Size from '@client/components/general/Size';
 import {torrentStatusEffective} from '@client/util/torrentStatus';
 import TorrentStore from '@client/stores/TorrentStore';
 
-import type {TorrentListColumn} from '@client/constants/TorrentListColumns';
+import type {TorrentListColumn} from '@shared/constants/TorrentListColumns';
 
 import type {TorrentProperties} from '@shared/types/Torrent';
 

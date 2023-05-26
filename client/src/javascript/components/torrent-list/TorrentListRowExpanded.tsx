@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {useLingui} from '@lingui/react';
 
 import SettingStore from '@client/stores/SettingStore';
-import TorrentListColumns from '@client/constants/TorrentListColumns';
+import TorrentListColumns from '@shared/constants/TorrentListColumns';
 
 import Size from '../general/Size';
 import TorrentListCell from './TorrentListCell';

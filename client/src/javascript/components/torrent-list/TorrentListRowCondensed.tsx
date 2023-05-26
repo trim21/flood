@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 
 import SettingStore from '../../stores/SettingStore';
 import TorrentListCell from './TorrentListCell';
-import TorrentListColumns from '../../constants/TorrentListColumns';
+import TorrentListColumns from '@shared/constants/TorrentListColumns';
 
 interface TorrentListRowCondensedProps {
   className: string;

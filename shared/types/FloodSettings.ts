@@ -1,6 +1,6 @@
-import type {Language} from '../../client/src/javascript/constants/Languages';
-import type {TorrentContextMenuAction} from '../../client/src/javascript/constants/TorrentContextMenuActions';
-import type {TorrentListColumn} from '../../client/src/javascript/constants/TorrentListColumns';
+import type {Language} from '../constants/Languages';
+import type {TorrentContextMenuAction} from '../constants/TorrentContextMenuActions';
+import type {TorrentListColumn} from '../constants/TorrentListColumns';
 
 export interface FloodSettings {
   language: Language;

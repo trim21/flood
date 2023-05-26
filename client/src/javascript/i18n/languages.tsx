@@ -5,13 +5,13 @@ import {observer} from 'mobx-react';
 import * as plurals from 'make-plural/plurals';
 
 import detectLocale from '@client/util/detectLocale';
-import Languages from '@client/constants/Languages';
+import Languages from '@shared/constants/Languages';
 import SettingStore from '@client/stores/SettingStore';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import {messages as EN} from '@lingui/loader!./strings/en.json?raw-lingui';
 
-import type {Language} from '@client/constants/Languages';
+import type {Language} from '@shared/constants/Languages';
 import type {LocaleConfig} from '@client/util/detectLocale';
 
 const messagesCache: Partial<Record<Exclude<Language, 'auto'>, Record<string, string[]>>> = {en: EN};

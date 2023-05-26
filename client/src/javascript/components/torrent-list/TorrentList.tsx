@@ -15,7 +15,7 @@ import TorrentFilterStore from '@client/stores/TorrentFilterStore';
 import TorrentStore from '@client/stores/TorrentStore';
 import SortDirections from '@client/constants/SortDirections';
 
-import type {TorrentListColumn} from '@client/constants/TorrentListColumns';
+import type {TorrentListColumn} from '@shared/constants/TorrentListColumns';
 
 import defaultFloodSettings from '@shared/constants/defaultFloodSettings';
 

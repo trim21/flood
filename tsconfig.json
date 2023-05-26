@@ -4,9 +4,6 @@
       "path": "./client/"
     },
     {
-      "path": "./shared/"
-    },
-    {
       "path": "./server/"
     }
   ],
@@ -26,13 +23,27 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": true,
     "baseUrl": "./",
+    "rootDir": "./",
     "outDir": "./dist/tsc/",
     "paths": {
-      "@client/*": ["client/src/javascript/*"],
-      "@server/*": ["server/*"],
-      "@shared/*": ["shared/*"]
+      "@client/*": [
+        "client/src/javascript/*"
+      ],
+      "@server/*": [
+        "server/*"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ]
     }
   },
-  "files": [],
-  "exclude": ["node_modules"]
+  "include": [
+    "./server/**/*.ts",
+    "./client/**/*.ts",
+    "./client/**/*.tsx",
+    "./shared/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules/**"
+  ]
 }

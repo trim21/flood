@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import {Checkmark} from '@client/ui/icons';
 import ConfigStore from '@client/stores/ConfigStore';
 import TorrentActions from '@client/actions/TorrentActions';
-import TorrentContextMenuActions from '@client/constants/TorrentContextMenuActions';
+import TorrentContextMenuActions from '@shared/constants/TorrentContextMenuActions';
 import TorrentStore from '@client/stores/TorrentStore';
 import UIStore from '@client/stores/UIStore';
 
