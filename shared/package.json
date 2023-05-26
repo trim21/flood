@@ -1,0 +1,25 @@
+{
+  "name": "@flood/shared",
+  "version": "4.7.0",
+  "private": false,
+  "files": [
+    "dist",
+    "node_modules",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md"
+  ],
+  "dependencies": {
+    "fast-json-patch": "^3.1.1"
+  },
+  "devDependencies": {
+    "typescript": "~4.8.3",
+    "yargs": "^17.5.1",
+    "zod": "^3.19.1"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  }
+}

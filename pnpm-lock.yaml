@@ -677,6 +677,22 @@ importers:
         specifier: ^3.19.1
         version: 3.19.1
 
+  shared:
+    dependencies:
+      fast-json-patch:
+        specifier: ^3.1.1
+        version: 3.1.1
+    devDependencies:
+      typescript:
+        specifier: ~4.8.3
+        version: 4.8.3
+      yargs:
+        specifier: ^17.5.1
+        version: 17.5.1
+      zod:
+        specifier: ^3.19.1
+        version: 3.19.1
+
 packages:
 
   /@ampproject/remapping@2.2.0:
@@ -6554,7 +6570,6 @@ packages:
 
   /fast-json-patch@3.1.1:
     resolution: {integrity: sha512-vf6IHUX2SBcA+5/+4883dsIjpBTqmfBjmYiWK1savxQmFk4JfBMLa7ynTYOs1Rolp/T1betJxHiGD3g1Mn8lUQ==}
-    dev: true
 
   /fast-json-stable-stringify@2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
