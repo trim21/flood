@@ -19,7 +19,7 @@ module.exports = {
   },
 
   rules: {
-    "import/no-anonymous-default-export": 0,
+    'import/no-anonymous-default-export': 0,
     'import/no-extraneous-dependencies': 0,
     'no-restricted-imports': [
       'error',

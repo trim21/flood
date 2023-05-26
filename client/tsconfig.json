@@ -18,21 +18,10 @@
     "baseUrl": "./",
     "outDir": "./dist/",
     "paths": {
-      "@client/*": [
-        "./src/javascript/*"
-      ],
-      "@shared/*": [
-        "../shared/*"
-      ]
+      "@client/*": ["./src/javascript/*"],
+      "@shared/*": ["../shared/*"]
     }
   },
-  "include": [
-    "./**/*.ts",
-    "./**/*.tsx",
-    "../shared/**/*.ts",
-    "../package.json"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./**/*.ts", "./**/*.tsx", "../shared/**/*.ts", "../package.json"],
+  "exclude": ["node_modules"]
 }
