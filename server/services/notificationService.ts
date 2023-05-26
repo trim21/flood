@@ -9,7 +9,7 @@ import type {
 } from '@shared/types/Notification';
 
 import BaseService from './BaseService';
-import config from '../../config';
+import config from '../../shared/config';
 
 type NotificationServiceEvents = {
   NOTIFICATION_COUNT_CHANGE: (payload: {id: number; data: NotificationCount}) => void;

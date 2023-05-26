@@ -11,7 +11,7 @@ import {
   AuthVerificationPreloadConfigs,
 } from '../../../shared/schema/api/auth';
 import {bootstrapServicesForUser, destroyUserServices} from '../../services';
-import config from '../../../config';
+import config from '../../../shared/config';
 import {getAuthToken, getCookieOptions} from '../../util/authUtil';
 import requireAdmin from '../../middleware/requireAdmin';
 import Users from '../../models/Users';

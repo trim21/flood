@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import config from '../../../config';
+import config from '../../../shared/config';
 import Users from '../../models/Users';
 
 const migration = () => {

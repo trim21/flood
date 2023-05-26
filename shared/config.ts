@@ -10,7 +10,7 @@ import {configSchema} from '@shared/schema/Config';
 import type {Config} from '@shared/schema/Config';
 import type {ClientConnectionSettings} from '@shared/schema/ClientConnectionSettings';
 
-import {version} from './package.json';
+import {version} from '../package.json';
 
 const {argv: argvObj} = yargs(process.argv.slice(2))
   .env('FLOOD_OPTION_')

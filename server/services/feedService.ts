@@ -4,7 +4,7 @@ import Datastore from '@seald-io/nedb';
 import type {FeedItem} from 'feedsub';
 
 import BaseService from './BaseService';
-import config from '../../config';
+import config from '../../shared/config';
 import FeedReader from '../models/FeedReader';
 import {getFeedItemsMatchingRules, getTorrentUrlsFromFeedItem} from '../util/feedUtil';
 

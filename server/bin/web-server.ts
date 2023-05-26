@@ -5,7 +5,7 @@ import http from 'http';
 import https from 'https';
 
 import app from '../app';
-import config from '../../config';
+import config from '../../shared/config';
 import packageJSON from '../../package.json';
 
 const debugFloodServer = debug('flood:server');

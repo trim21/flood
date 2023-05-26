@@ -3,7 +3,7 @@ import path from 'path';
 
 import type {FloodSettings} from '@shared/types/FloodSettings';
 
-import config from '../../config';
+import config from '../../shared/config';
 import BaseService from './BaseService';
 
 interface SettingRecord {

@@ -25,8 +25,22 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              babelrc: true,
+              presets: [
+                '@babel/env',
+                '@babel/typescript',
+                ['@babel/react', {runtime: 'automatic', importSource: '@emotion/react'}],
+              ],
+              plugins: [
+                ['@babel/plugin-proposal-decorators', {legacy: true}],
+                ['@babel/plugin-proposal-class-properties', {loose: false}],
+                '@babel/proposal-object-rest-spread',
+                '@babel/plugin-proposal-optional-chaining',
+                '@emotion/babel-plugin',
+              ],
             },
+            // options: {
+            //   babelrc: true,
+            // },
           },
         ],
       },
@@ -106,8 +120,8 @@ module.exports = {
   resolve: {
     extensions: ['.cjs', '.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
-      '@client': path.resolve('./client/src/javascript'),
-      '@shared': path.resolve('./shared'),
+      '@client': path.resolve(__dirname, '../src/javascript'),
+      '@shared': path.resolve(__dirname, '../../shared'),
     },
   },
   output: {

@@ -1,7 +1,7 @@
 import type {TransferHistory, TransferSummary} from '@shared/types/TransferData';
 
 import BaseService from './BaseService';
-import config from '../../config';
+import config from '../../shared/config';
 import HistoryEra from '../models/HistoryEra';
 
 type HistoryServiceEvents = {

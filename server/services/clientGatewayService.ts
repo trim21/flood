@@ -26,7 +26,7 @@ import type {TransferSummary} from '@shared/types/TransferData';
 import type {UserInDatabase} from '@shared/schema/Auth';
 
 import BaseService from './BaseService';
-import config from '../../config';
+import config from '../../shared/config';
 
 type ClientGatewayServiceEvents = {
   CLIENT_CONNECTION_STATE_CHANGE: (isConnected: boolean) => void;

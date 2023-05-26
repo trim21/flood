@@ -33,9 +33,9 @@
   "sourceLocale": "en",
   "catalogs": [
     {
-      "path": "client/src/javascript/i18n/strings/{locale}",
+      "path": "src/javascript/i18n/strings/{locale}",
       "include": [
-        "<rootDir>/client/src/javascript"
+        "<rootDir>/src/javascript"
       ],
       "exclude": [
         "**/node_modules/**"

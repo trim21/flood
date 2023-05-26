@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import type {AuthToken} from '@shared/schema/Auth';
 
-import config from '../../config';
+import config from '../../shared/config';
 
 const EXPIRATION_SECONDS = 60 * 60 * 24 * 7; // one week
 

@@ -16,7 +16,7 @@ import paths from '@shared/config/paths';
 import type {UserInDatabase} from '@shared/schema/Auth';
 
 import apiRoutes from './routes/api';
-import config from '../config';
+import config from '../shared/config';
 import Users from './models/Users';
 
 declare global {

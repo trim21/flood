@@ -3,7 +3,7 @@ import type {TransferData, TransferSnapshot} from '@shared/types/TransferData';
 import Datastore from '@seald-io/nedb';
 import {setInterval} from 'timers';
 
-import config from '../../config';
+import config from '../../shared/config';
 
 interface HistoryEraOpts {
   interval: number;

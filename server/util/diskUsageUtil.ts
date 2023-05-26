@@ -2,7 +2,7 @@ import {spawn, SpawnOptions} from 'child_process';
 
 import type {Disk} from '@shared/types/DiskUsage';
 
-import config from '../../config';
+import config from '../../shared/config';
 
 const spawnAsync = (cmd: string, args: string[], options: SpawnOptions, maxBuffer: number): Promise<string> =>
   new Promise((resolve, reject) => {

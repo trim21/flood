@@ -1,9 +1,8 @@
 const path = require('path');
-const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const WebpackBar = require('webpackbar');
+
 const paths = require('../../shared/config/paths');
 
 module.exports = {
@@ -86,8 +85,8 @@ module.exports = {
   resolve: {
     extensions: ['.cjs', '.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
-      '@client': path.resolve('./client/src/javascript'),
-      '@shared': path.resolve('./shared'),
+      '@client': path.resolve(__dirname, '../src/javascript'),
+      '@shared': path.resolve(__dirname, '../../shared'),
     },
   },
   output: {
@@ -102,11 +101,6 @@ module.exports = {
     assetModuleFilename: 'static/media/[name].[hash:8].[ext]',
   },
   plugins: [
-    new ESLintPlugin({
-      extensions: ['js', 'jsx', 'ts', 'tsx'],
-      emitWarning: true,
-      threads: true,
-    }),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -117,7 +111,6 @@ module.exports = {
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240
     new CaseSensitivePathsPlugin(),
-    new WebpackBar(),
   ],
   devtool: 'source-map',
   optimization: {

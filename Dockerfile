@@ -20,11 +20,14 @@ WORKDIR /usr/src/app/
 # Copy project files
 COPY . ./
 
+# install pnpm
+RUN corepack enable && corepack prepare --activate
+
 # Fetch dependencies from npm
-RUN npm ci --legacy-peer-deps
+RUN pnpm i
 
 # Build assets
-RUN npm run build
+RUN pnpm run build
 
 # Now get the clean Node.js image
 FROM ${NODE_IMAGE} as flood

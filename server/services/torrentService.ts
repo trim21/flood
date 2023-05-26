@@ -3,7 +3,7 @@ import jsonpatch, {Operation} from 'fast-json-patch';
 import type {TorrentProperties, TorrentListSummary} from '@shared/types/Torrent';
 
 import BaseService from './BaseService';
-import config from '../../config';
+import config from '../../shared/config';
 import {hasTorrentFinished} from '../util/torrentPropertiesUtil';
 
 type TorrentServiceEvents = {

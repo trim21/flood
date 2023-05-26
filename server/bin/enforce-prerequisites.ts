@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import {appDist} from '../../shared/config/paths';
-import config from '../../config';
+import config from '../../shared/config';
 
 const staticAssets = [path.join(appDist, 'index.html')];
 

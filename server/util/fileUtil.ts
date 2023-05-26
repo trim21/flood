@@ -2,7 +2,7 @@ import fs from 'fs';
 import {homedir} from 'os';
 import path from 'path';
 
-import config from '../../config';
+import config from '../../shared/config';
 
 export const accessDeniedError = () => {
   const error = new Error('Permission denied') as NodeJS.ErrnoException;

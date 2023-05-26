@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 import {AccessLevel} from '../../shared/schema/constants/Auth';
-import config from '../../config';
+import config from '../../shared/config';
 import {bootstrapServicesForUser, destroyUserServices} from '../services';
 
 import type {ClientConnectionSettings} from '../../shared/schema/ClientConnectionSettings';

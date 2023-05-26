@@ -1,7 +1,4 @@
 const path = require('path');
-const ShebangPlugin = require('webpack-shebang-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackBar = require('webpackbar');
 
 const paths = require('../../shared/config/paths');
 
@@ -12,6 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = {
   mode: 'production',
+  target: 'node',
   entry: path.resolve(__dirname, '../bin/start.ts'),
   externals: {
     'geoip-country': 'node-commonjs geoip-country',
@@ -52,20 +50,8 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
-    ],
+    minimize: false,
   },
-  plugins: [new WebpackBar({name: 'server'}), new ShebangPlugin()],
-  target: 'node',
   ignoreWarnings: [
     {
       module: /node_modules\/yargs/,
