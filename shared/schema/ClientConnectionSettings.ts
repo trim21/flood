@@ -59,6 +59,14 @@ const transmissionConnectionSettingsSchema = strictObject({
   password: string(),
 });
 
+export type TYRConnectionSettings = zodInfer<typeof tyrConnectionSettingsSchema>;
+
+const tyrConnectionSettingsSchema = strictObject({
+  client: literal('tyr'),
+  url: string().url(),
+  token: string(),
+});
+
 export type TransmissionConnectionSettings = zodInfer<typeof transmissionConnectionSettingsSchema>;
 
 export const clientConnectionSettingsSchema = union([
@@ -66,6 +74,7 @@ export const clientConnectionSettingsSchema = union([
   qBittorrentConnectionSettingsSchema,
   rTorrentConnectionSettingsSchema,
   transmissionConnectionSettingsSchema,
+  tyrConnectionSettingsSchema,
 ]);
 
 export type ClientConnectionSettings = zodInfer<typeof clientConnectionSettingsSchema>;

@@ -11,6 +11,7 @@ import TorrentService from './torrentService';
 import DelugeClientGatewayService from './Deluge/clientGatewayService';
 import QBittorrentClientGatewayService from './qBittorrent/clientGatewayService';
 import RTorrentClientGatewayService from './rTorrent/clientGatewayService';
+import TYRClientGatewayService from './tyr/clientGatewayService';
 import TransmissionClientGatewayService from './Transmission/clientGatewayService';
 
 export interface ServiceInstances {
@@ -35,6 +36,8 @@ const newClientGatewayService = (user: UserInDatabase): ClientGatewayService => 
       return new RTorrentClientGatewayService(user);
     case 'Transmission':
       return new TransmissionClientGatewayService(user);
+    case 'tyr':
+      return new TYRClientGatewayService(user);
   }
 };
 
