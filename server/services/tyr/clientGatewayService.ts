@@ -17,7 +17,7 @@ import type {
   StopTorrentsOptions,
 } from '@shared/types/api/torrents';
 import type {ClientSettings} from '@shared/types/ClientSettings';
-import type {TorrentContent} from '@shared/types/TorrentContent';
+import {TorrentContent, TorrentContentPriority} from '@shared/types/TorrentContent';
 import type {TorrentListSummary, TorrentProperties} from '@shared/types/Torrent';
 import type {TorrentPeer} from '@shared/types/TorrentPeer';
 import type {TorrentTracker} from '@shared/types/TorrentTracker';
@@ -29,43 +29,16 @@ import ClientRequestManager from './clientRequestManager';
 
 import type {RPCError} from './types/RPCError';
 import type {TYRConnectionSettings} from '@shared/schema/ClientConnectionSettings';
-import {UserInDatabase} from '@shared/schema/Auth';
 import {TorrentStatus} from '@shared/constants/torrentStatusMap';
-import {processMethodCallResponse} from '../rTorrent/util/rTorrentMethodCallUtil';
-import {torrentListMethodCallConfigs} from '../rTorrent/constants/methodCallConfigs';
 
 class TYRClientGatewayService extends ClientGatewayService {
-  // clientRequestManager: ClientRequestManager = new ClientRequestManager();
   clientRequestManager = new ClientRequestManager(this.user.client as TYRConnectionSettings);
 
-  // constructor(user: UserInDatabase) {
-  //   super(user);
-  // }
-
-  async addTorrentsByFile({
-    files,
-    destination,
-    tags,
-    isBasePath,
-    isCompleted,
-    isSequential,
-    isInitialSeeding,
-    start,
-  }: Required<AddTorrentByFileOptions>): Promise<string[]> {
+  async addTorrentsByFile({}: Required<AddTorrentByFileOptions>): Promise<string[]> {
     return [];
   }
 
-  async addTorrentsByURL({
-    urls: inputUrls,
-    cookies,
-    destination,
-    tags,
-    isBasePath,
-    isCompleted,
-    isSequential,
-    isInitialSeeding,
-    start,
-  }: Required<AddTorrentByURLOptions>): Promise<string[]> {
+  async addTorrentsByURL({}: Required<AddTorrentByURLOptions>): Promise<string[]> {
     return [];
   }
 
@@ -74,7 +47,24 @@ class TYRClientGatewayService extends ClientGatewayService {
   }
 
   async getTorrentContents(hash: TorrentProperties['hash']): Promise<Array<TorrentContent>> {
-    return [];
+    const res: {
+      files: Array<{
+        index: number;
+        path: string[];
+        size: number;
+        progress: number;
+      }>;
+    } = await this.clientRequestManager.methodCall('torrent.files', {info_hash: hash});
+    return res.files.map((f) => {
+      return {
+        index: f.index,
+        path: f.path.join('/'),
+        priority: TorrentContentPriority.NORMAL,
+        sizeBytes: f.size,
+        filename: f.path[f.path.length - 1] || '',
+        percentComplete: f.progress * 100,
+      };
+    });
   }
 
   async getTorrentPeers(hash: TorrentProperties['hash']): Promise<Array<TorrentPeer>> {
@@ -85,7 +75,7 @@ class TYRClientGatewayService extends ClientGatewayService {
     return [];
   }
 
-  async moveTorrents({hashes, destination, moveFiles, isBasePath, isCheckHash}: MoveTorrentsOptions): Promise<void> {
+  async moveTorrents({}: MoveTorrentsOptions): Promise<void> {
     return;
   }
 
@@ -93,34 +83,31 @@ class TYRClientGatewayService extends ClientGatewayService {
     return;
   }
 
-  async removeTorrents({hashes, deleteData}: DeleteTorrentsOptions): Promise<void> {
+  async removeTorrents({}: DeleteTorrentsOptions): Promise<void> {
     return;
   }
 
-  async setTorrentsInitialSeeding({hashes, isInitialSeeding}: SetTorrentsInitialSeedingOptions): Promise<void> {
+  async setTorrentsInitialSeeding({}: SetTorrentsInitialSeedingOptions): Promise<void> {
     return;
   }
 
-  async setTorrentsPriority({hashes, priority}: SetTorrentsPriorityOptions): Promise<void> {
+  async setTorrentsPriority({}: SetTorrentsPriorityOptions): Promise<void> {
     return;
   }
 
-  async setTorrentsSequential({hashes, isSequential}: SetTorrentsSequentialOptions): Promise<void> {
+  async setTorrentsSequential({}: SetTorrentsSequentialOptions): Promise<void> {
     return;
   }
 
-  async setTorrentsTags({hashes, tags}: SetTorrentsTagsOptions): Promise<void> {
+  async setTorrentsTags({}: SetTorrentsTagsOptions): Promise<void> {
     return;
   }
 
-  async setTorrentsTrackers({hashes, trackers}: SetTorrentsTrackersOptions): Promise<void> {
+  async setTorrentsTrackers({}: SetTorrentsTrackersOptions): Promise<void> {
     return;
   }
 
-  async setTorrentContentsPriority(
-    hash: string,
-    {indices, priority}: SetTorrentContentsPropertiesOptions,
-  ): Promise<void> {
+  async setTorrentContentsPriority(hash: string, {}: SetTorrentContentsPropertiesOptions): Promise<void> {
     return;
   }
 
@@ -157,6 +144,7 @@ class TYRClientGatewayService extends ClientGatewayService {
             tags: string[];
             state: string;
             message: string;
+            connection_count: number;
           }) => {
             const eta = t.download_rate ? (t.total_length - t.completed) / t.download_rate : 0;
             let state = t.state.toLowerCase();
@@ -183,7 +171,7 @@ class TYRClientGatewayService extends ClientGatewayService {
               isSequential: false, // not supported yet
               name: t.name,
               isPrivate: t.private,
-              peersConnected: 0,
+              peersConnected: t.connection_count,
               priority: 0,
               peersTotal: 0,
               percentComplete: (t.completed / t.total_length) * 100,

@@ -11,7 +11,7 @@ class ClientRequestManager {
     this.settings = settings;
   }
 
-  async sendMethodCall(methodName: string, params: unknown) {
+  async methodCall(methodName: string, params: unknown) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const request = {
       jsonrpc: '2.0',
@@ -34,10 +34,6 @@ class ClientRequestManager {
 
     return jsonResponse.result;
   }
-
-  methodCall = (methodName: string, parameters: unknown) => {
-    return this.sendMethodCall(methodName, parameters);
-  };
 }
 
 export default ClientRequestManager;
