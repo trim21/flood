@@ -1,4 +1,4 @@
-name: Publish rolling build
+name: Publish rolling build (tyr)
 
 on:
   push:
