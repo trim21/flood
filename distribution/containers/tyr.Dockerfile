@@ -6,8 +6,8 @@ WORKDIR /app/
 COPY . /app/
 
 # Get specified version from npm
-RUN npm install --omit=dev &&\
-    npm cache clean --force
+RUN npm install &&\
+    npm run build
 
 FROM docker.io/node:lts-alpine
 
@@ -20,6 +20,8 @@ RUN apk --no-cache add \
 COPY --from=builder /app/package.json /app/dist/ /app/
 
 WORKDIR /app/
+
+RUN npm install --omit=dev
 
 # Expose port 3000
 EXPOSE 3000
