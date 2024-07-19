@@ -1,0 +1,57 @@
+name: Publish rolling build
+
+on:
+  push:
+    branches:
+      - tyr
+
+jobs:
+  docker:
+    needs: npm
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - run: npm i
+      - run: npm run build
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: 'ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}'
+          tags: |
+            type=semver,pattern=v{{version}}
+
+            type=ref,event=branch
+            type=ref,event=branch,suffix=-{{ sha }}
+
+            type=raw,value=${{ env.SHA }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          provenance: false
+          file: distribution/containers/tyr.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
