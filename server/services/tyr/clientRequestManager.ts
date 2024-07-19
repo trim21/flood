@@ -27,9 +27,9 @@ class ClientRequestManager {
     });
 
     const jsonResponse = res.data;
-    if (typeof jsonResponse.result === 'undefined') {
-      const {code, message} = jsonResponse.error || {};
-      throw RPCError(message, code);
+    if (typeof jsonResponse.error !== 'undefined') {
+      const {code, data, message} = jsonResponse.error;
+      throw new RPCError(code, message, data);
     }
 
     return jsonResponse.result;

@@ -27,19 +27,55 @@ import type {SetClientSettingsOptions} from '@shared/types/api/client';
 import ClientGatewayService from '../clientGatewayService';
 import ClientRequestManager from './clientRequestManager';
 
-import type {RPCError} from './types/RPCError';
+import {RPCError} from './types/RPCError';
 import type {TYRConnectionSettings} from '@shared/schema/ClientConnectionSettings';
 import {TorrentStatus} from '@shared/constants/torrentStatusMap';
+import geoip from 'geoip-country';
 
 class TYRClientGatewayService extends ClientGatewayService {
   clientRequestManager = new ClientRequestManager(this.user.client as TYRConnectionSettings);
 
-  async addTorrentsByFile({}: Required<AddTorrentByFileOptions>): Promise<string[]> {
-    return [];
+  async addTorrentsByFile({
+    files,
+    destination,
+    tags,
+    isCompleted,
+  }: Required<AddTorrentByFileOptions>): Promise<string[]> {
+    const addedTorrents = await Promise.all(
+      files.map(async (file) => {
+        const {info_hash} =
+          (await this.clientRequestManager
+            .methodCall('torrent.add', {
+              torrent_file: file,
+              download_dir: destination,
+              tags,
+            })
+            .then(
+              (res) => {
+                console.log(res);
+                return res;
+              },
+              (err) => {
+                console.log(err);
+                return err;
+              },
+            )
+            .then(this.processClientRequestSuccess, this.processClientRequestError)
+            .catch(() => undefined)) || {};
+        return info_hash;
+      }),
+    ).then((results) => results.filter((hash) => hash) as string[]);
+
+    // if (isCompleted) {
+    //   // Transmission doesn't support skipping verification
+    //   this.checkTorrents({hashes: addedTorrents}).catch(() => undefined);
+    // }
+
+    return addedTorrents;
   }
 
   async addTorrentsByURL({}: Required<AddTorrentByURLOptions>): Promise<string[]> {
-    return [];
+    throw new RPCError(-1, 'add torrent by url is not supported yet');
   }
 
   async checkTorrents({hashes}: CheckTorrentsOptions): Promise<void> {
@@ -67,12 +103,64 @@ class TYRClientGatewayService extends ClientGatewayService {
     });
   }
 
-  async getTorrentPeers(hash: TorrentProperties['hash']): Promise<Array<TorrentPeer>> {
-    return [];
+  async getTorrentPeers(info_hash: TorrentProperties['hash']): Promise<Array<TorrentPeer>> {
+    return this.clientRequestManager
+      .methodCall('torrent.peers', {info_hash})
+      .then(this.processClientRequestSuccess, this.processRPCRequestError)
+      .then(
+        ({
+          peers,
+        }: {
+          peers: Array<{
+            address: string;
+            client: string;
+            progress: number;
+            download_rate: number;
+            upload_rate: number;
+            is_incoming: boolean;
+          }>;
+        }) => {
+          return peers
+            .map((peer) => ({
+              address: peer.address,
+              country: geoip.lookup(peer.address)?.country || '',
+              clientVersion: peer.client,
+              completedPercent: peer.progress * 100,
+              downloadRate: peer.download_rate,
+              uploadRate: peer.upload_rate,
+              isEncrypted: false,
+              isIncoming: peer.is_incoming,
+            }))
+            .sort((a, b) => {
+              if (a.downloadRate === b.downloadRate) {
+                return b.uploadRate - a.uploadRate;
+              }
+
+              return b.downloadRate - a.downloadRate;
+            });
+        },
+      );
   }
 
-  async getTorrentTrackers(hash: TorrentProperties['hash']): Promise<Array<TorrentTracker>> {
-    return [];
+  async getTorrentTrackers(info_hash: TorrentProperties['hash']): Promise<Array<TorrentTracker>> {
+    return this.clientRequestManager
+      .methodCall('torrent.trackers', {info_hash})
+      .then(this.processClientRequestSuccess, this.processRPCRequestError)
+      .then(
+        ({
+          trackers,
+        }: {
+          trackers: Array<{
+            tier: number;
+            url: string;
+          }>;
+        }) => {
+          return trackers.map((tracker) => ({
+            type: 1,
+            url: tracker.url,
+          }));
+        },
+      );
   }
 
   async moveTorrents({}: MoveTorrentsOptions): Promise<void> {

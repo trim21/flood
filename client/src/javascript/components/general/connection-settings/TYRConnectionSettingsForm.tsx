@@ -39,7 +39,6 @@ const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsCh
               onChange={(e) => handleFormChange('url', e.target.value)}
               id="url"
               label={<Trans id="connection.settings.tyr.url" />}
-              // defaultValue={'http://127.0.0.1:8002/json_rpc'}
               placeholder={i18n._('connection.settings.tyr.url.input.placeholder')}
             />
           </FormRow>
@@ -48,7 +47,6 @@ const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsCh
             <Textbox
               onChange={(e) => handleFormChange('token', e.target.value)}
               id="token"
-              // defaultValue={'M37s8ozeF5Wfsnlnuzvzj2jPqsWZX4Za'}
               label={<Trans id="connection.settings.tyr.token" />}
             />
           </FormRow>

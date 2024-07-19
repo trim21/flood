@@ -1,11 +1,17 @@
-export interface RPCError extends Error {
-  code?: number;
+export class RPCError extends Error {
+  code: number;
+  data?: unknown;
   isRPCError: boolean;
-}
 
-export const RPCError = (message?: string, code?: number): RPCError => {
-  const e = new Error(message) as RPCError;
-  e.code = code;
-  e.isRPCError = true;
-  return e;
-};
+  constructor(code: number, message: string, data?: unknown) {
+    if (data !== undefined) {
+      super(`${message}: ${data}`);
+    } else {
+      super(message);
+    }
+
+    this.code = code;
+    this.data = data;
+    this.isRPCError = true;
+  }
+}
