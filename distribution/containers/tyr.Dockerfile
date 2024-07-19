@@ -1,12 +1,15 @@
 # Use node alpine docker image
-FROM docker.io/node:lts-alpine
+FROM docker.io/node:lts-alpine as builder
 
-COPY dist/ /app/dist/
-COPY package.json package-lock.json /app/
+WORKDIR /app/
+
+COPY . /app/
 
 # Get specified version from npm
 RUN npm install --omit=dev &&\
     npm cache clean --force
+
+FROM docker.io/node:lts-alpine
 
 # Install runtime dependencies
 RUN apk --no-cache add \
@@ -14,7 +17,9 @@ RUN apk --no-cache add \
     tini \
     coreutils
 
-WORKDIR /app/src/
+COPY --from=builder /app/package.json /app/dist/ /app/
+
+WORKDIR /app/
 
 # Expose port 3000
 EXPOSE 3000
