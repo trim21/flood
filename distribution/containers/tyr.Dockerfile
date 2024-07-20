@@ -17,7 +17,7 @@ RUN apk --no-cache add \
     tini \
     coreutils
 
-COPY --from=builder /app/package.json /app/dist/ /app/
+COPY --from=builder /app/package.json /app/package-lock.json /app/dist/ /app/
 
 WORKDIR /app/
 
