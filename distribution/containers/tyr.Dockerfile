@@ -21,7 +21,7 @@ COPY --from=builder /app/package.json /app/dist/ /app/
 
 WORKDIR /app/
 
-RUN npm install --omit=dev
+RUN npm install --production
 
 # Expose port 3000
 EXPOSE 3000
