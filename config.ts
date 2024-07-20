@@ -114,11 +114,11 @@ const {argv: argvObj} = yargs(process.argv.slice(2))
     type: 'string',
   })
   .option('tyr-url', {
-    describe: 'URL to Transmission RPC interface',
+    describe: 'URL to TYR RPC interface. for example: http://127.0.0.1:8002/json_rpc',
     type: 'string',
   })
   .option('tyr-token', {
-    describe: 'Username of Transmission RPC interface',
+    describe: 'Token of TYR RPC interface',
     type: 'string',
   })
   .group(
