@@ -7,12 +7,12 @@ RUN apk --no-cache add \
     tini \
     coreutils
 
-COPY package.json package-lock.json build /app/
+COPY package.json package-lock.json /app/
+COPY build /app/dist/
 
 WORKDIR /app/
 
-RUN mv build dist &&\
-    npm install --ignore-scripts --omit=dev &&\
+RUN npm install --ignore-scripts --omit=dev &&\
     npm cache clean --force
 
 
