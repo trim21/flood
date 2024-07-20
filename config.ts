@@ -113,6 +113,14 @@ const {argv: argvObj} = yargs(process.argv.slice(2))
     describe: 'Password of Transmission RPC interface',
     type: 'string',
   })
+  .option('tyr-url', {
+    describe: 'URL to Transmission RPC interface',
+    type: 'string',
+  })
+  .option('tyr-token', {
+    describe: 'Username of Transmission RPC interface',
+    type: 'string',
+  })
   .group(
     [
       'dehost',
@@ -128,6 +136,8 @@ const {argv: argvObj} = yargs(process.argv.slice(2))
       'trurl',
       'truser',
       'trpass',
+      'tyr-url',
+      'tyr-token',
     ],
     'When auth=none:',
   )
@@ -315,6 +325,12 @@ if (argv.rtsocket != null || argv.rthost != null) {
     port: argv.deport,
     username: argv.deuser,
     password: argv.depass,
+  };
+} else if (argv.tyrUrl != null) {
+  connectionSettings = {
+    client: 'tyr',
+    url: argv.tyrUrl,
+    token: argv.tyrToken,
   };
 }
 
