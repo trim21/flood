@@ -21,7 +21,8 @@ COPY --from=builder /app/package.json /app/dist/ /app/
 
 WORKDIR /app/
 
-RUN npm install --production
+RUN npm install --production &&\
+    npm cache clean --force
 
 # Expose port 3000
 EXPOSE 3000
