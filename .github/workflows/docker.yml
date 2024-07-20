@@ -17,6 +17,10 @@ jobs:
           node-version: 'lts/*'
           cache: npm
 
+      - run: npm ci
+      - run: npm run build
+      - run: cp -r dist/ build/
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -48,7 +52,7 @@ jobs:
           context: .
           push: true
           provenance: false
-          file: Dockerfile
+          file: distribution/containers/tyr.Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
