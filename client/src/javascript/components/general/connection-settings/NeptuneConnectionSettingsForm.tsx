@@ -9,7 +9,9 @@ export interface TYRConnectionSettingsProps {
   onSettingsChange: (settings: NeptuneConnectionSettings | null) => void;
 }
 
-const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsChange}: TYRConnectionSettingsProps) => {
+const NeptuneConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({
+  onSettingsChange,
+}: TYRConnectionSettingsProps) => {
   const {i18n} = useLingui();
   const [settings, setSettings] = useState<NeptuneConnectionSettings>({
     client: 'Neptune',
@@ -56,4 +58,4 @@ const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsCh
   );
 };
 
-export default TYRConnectionSettingsForm;
+export default NeptuneConnectionSettingsForm;

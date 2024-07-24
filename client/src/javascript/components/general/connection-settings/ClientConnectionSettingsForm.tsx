@@ -12,7 +12,7 @@ import DelugeConnectionSettingsForm from './DelugeConnectionSettingsForm';
 import QBittorrentConnectionSettingsForm from './QBittorrentConnectionSettingsForm';
 import RTorrentConnectionSettingsForm from './RTorrentConnectionSettingsForm';
 import TransmissionConnectionSettingsForm from './TransmissionConnectionSettingsForm';
-import TYRConnectionSettingsForm from '@client/components/general/connection-settings/TYRConnectionSettingsForm';
+import NeptuneConnectionSettingsForm from '@client/components/general/connection-settings/NeptuneConnectionSettingsForm';
 
 const DEFAULT_SELECTION: ClientConnectionSettings['client'] = 'rTorrent' as const;
 
@@ -47,7 +47,7 @@ const ClientConnectionSettingsForm: FC<ClientConnectionSettingsFormProps> = ({
       settingsForm = <TransmissionConnectionSettingsForm onSettingsChange={onSettingsChange} />;
       break;
     case 'Neptune':
-      settingsForm = <TYRConnectionSettingsForm onSettingsChange={onSettingsChange} />;
+      settingsForm = <NeptuneConnectionSettingsForm onSettingsChange={onSettingsChange} />;
       break;
     default:
       break;
