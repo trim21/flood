@@ -28,12 +28,12 @@ import ClientGatewayService from '../clientGatewayService';
 import ClientRequestManager from './clientRequestManager';
 
 import {RPCError} from './types/RPCError';
-import type {TYRConnectionSettings} from '@shared/schema/ClientConnectionSettings';
+import type {NeptuneConnectionSettings} from '@shared/schema/ClientConnectionSettings';
 import {TorrentStatus} from '@shared/constants/torrentStatusMap';
 import geoip from 'geoip-country';
 
-class TYRClientGatewayService extends ClientGatewayService {
-  clientRequestManager = new ClientRequestManager(this.user.client as TYRConnectionSettings);
+class NeptuneClientGatewayService extends ClientGatewayService {
+  clientRequestManager = new ClientRequestManager(this.user.client as NeptuneConnectionSettings);
 
   async addTorrentsByFile({
     files,
@@ -41,7 +41,12 @@ class TYRClientGatewayService extends ClientGatewayService {
     tags,
     isCompleted,
   }: Required<AddTorrentByFileOptions>): Promise<string[]> {
-    const addedTorrents = await Promise.all(
+    // if (isCompleted) {
+    //   // Transmission doesn't support skipping verification
+    //   this.checkTorrents({hashes: addedTorrents}).catch(() => undefined);
+    // }
+
+    return await Promise.all(
       files.map(async (file) => {
         const {info_hash} =
           (await this.clientRequestManager
@@ -65,13 +70,6 @@ class TYRClientGatewayService extends ClientGatewayService {
         return info_hash;
       }),
     ).then((results) => results.filter((hash) => hash) as string[]);
-
-    // if (isCompleted) {
-    //   // Transmission doesn't support skipping verification
-    //   this.checkTorrents({hashes: addedTorrents}).catch(() => undefined);
-    // }
-
-    return addedTorrents;
   }
 
   async addTorrentsByURL({}: Required<AddTorrentByURLOptions>): Promise<string[]> {
@@ -348,4 +346,4 @@ class TYRClientGatewayService extends ClientGatewayService {
   };
 }
 
-export default TYRClientGatewayService;
+export default NeptuneClientGatewayService;

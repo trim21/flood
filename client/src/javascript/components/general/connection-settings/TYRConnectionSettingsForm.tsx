@@ -3,22 +3,22 @@ import {Trans, useLingui} from '@lingui/react';
 
 import {FormGroup, FormRow, FormRowGroup, Textbox} from '@client/ui';
 
-import type {TYRConnectionSettings} from '@shared/schema/ClientConnectionSettings';
+import type {NeptuneConnectionSettings} from '@shared/schema/ClientConnectionSettings';
 
 export interface TYRConnectionSettingsProps {
-  onSettingsChange: (settings: TYRConnectionSettings | null) => void;
+  onSettingsChange: (settings: NeptuneConnectionSettings | null) => void;
 }
 
 const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsChange}: TYRConnectionSettingsProps) => {
   const {i18n} = useLingui();
-  const [settings, setSettings] = useState<TYRConnectionSettings>({
-    client: 'tyr',
+  const [settings, setSettings] = useState<NeptuneConnectionSettings>({
+    client: 'Neptune',
     url: '',
     token: '',
   });
 
   const handleFormChange = (field: 'url' | 'token', value: string): void => {
-    const newSettings: TYRConnectionSettings = {
+    const newSettings: NeptuneConnectionSettings = {
       ...settings,
       ...{[field]: value},
     };
@@ -38,8 +38,8 @@ const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsCh
             <Textbox
               onChange={(e) => handleFormChange('url', e.target.value)}
               id="url"
-              label={<Trans id="connection.settings.tyr.url" />}
-              placeholder={i18n._('connection.settings.tyr.url.input.placeholder')}
+              label={<Trans id="connection.settings.neptune.url" />}
+              placeholder={i18n._('connection.settings.neptune.url.input.placeholder')}
             />
           </FormRow>
 
@@ -47,7 +47,7 @@ const TYRConnectionSettingsForm: FC<TYRConnectionSettingsProps> = ({onSettingsCh
             <Textbox
               onChange={(e) => handleFormChange('token', e.target.value)}
               id="token"
-              label={<Trans id="connection.settings.tyr.token" />}
+              label={<Trans id="connection.settings.neptune.token" />}
             />
           </FormRow>
         </FormRowGroup>

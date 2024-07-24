@@ -1,9 +1,9 @@
-name: Publish rolling build (tyr)
+name: Publish rolling build (neptune)
 
 on:
   push:
     branches:
-      - tyr
+      - neptune
 
 jobs:
   docker:
@@ -54,7 +54,7 @@ jobs:
           context: .
           push: true
           provenance: false
-          file: distribution/containers/tyr.Dockerfile
+          file: distribution/containers/neptune.Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -113,11 +113,11 @@ const {argv: argvObj} = yargs(process.argv.slice(2))
     describe: 'Password of Transmission RPC interface',
     type: 'string',
   })
-  .option('tyr-url', {
+  .option('neptune-url', {
     describe: 'URL to TYR RPC interface. for example: http://127.0.0.1:8002/json_rpc',
     type: 'string',
   })
-  .option('tyr-token', {
+  .option('neptune-token', {
     describe: 'Token of TYR RPC interface',
     type: 'string',
   })
@@ -136,8 +136,8 @@ const {argv: argvObj} = yargs(process.argv.slice(2))
       'trurl',
       'truser',
       'trpass',
-      'tyr-url',
-      'tyr-token',
+      'neptune-url',
+      'neptune-token',
     ],
     'When auth=none:',
   )
@@ -326,11 +326,11 @@ if (argv.rtsocket != null || argv.rthost != null) {
     username: argv.deuser,
     password: argv.depass,
   };
-} else if (argv.tyrUrl != null) {
+} else if (argv.neptuneUrl != null) {
   connectionSettings = {
-    client: 'tyr',
-    url: argv.tyrUrl,
-    token: argv.tyrToken,
+    client: 'Neptune',
+    url: argv.neptuneUrl,
+    token: argv.neptuneToken,
   };
 }
 

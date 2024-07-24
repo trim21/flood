@@ -59,10 +59,10 @@ const transmissionConnectionSettingsSchema = strictObject({
   password: string(),
 });
 
-export type TYRConnectionSettings = zodInfer<typeof tyrConnectionSettingsSchema>;
+export type NeptuneConnectionSettings = zodInfer<typeof tyrConnectionSettingsSchema>;
 
 const tyrConnectionSettingsSchema = strictObject({
-  client: literal('tyr'),
+  client: literal('Neptune'),
   url: string().url(),
   token: string(),
 });

@@ -2,12 +2,12 @@ import {RPCError} from './types/RPCError';
 
 import axios from 'axios';
 
-import type {TYRConnectionSettings} from '@shared/schema/ClientConnectionSettings';
+import type {NeptuneConnectionSettings} from '@shared/schema/ClientConnectionSettings';
 
 class ClientRequestManager {
-  settings: TYRConnectionSettings;
+  settings: NeptuneConnectionSettings;
 
-  constructor(settings: TYRConnectionSettings) {
+  constructor(settings: NeptuneConnectionSettings) {
     this.settings = settings;
   }
 

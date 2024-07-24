@@ -46,7 +46,7 @@ const ClientConnectionSettingsForm: FC<ClientConnectionSettingsFormProps> = ({
     case 'Transmission':
       settingsForm = <TransmissionConnectionSettingsForm onSettingsChange={onSettingsChange} />;
       break;
-    case 'tyr':
+    case 'Neptune':
       settingsForm = <TYRConnectionSettingsForm onSettingsChange={onSettingsChange} />;
       break;
     default:
