@@ -94,6 +94,21 @@ const watchTorrentList = (op: 'add' | 'remove' | 'replace' | 'move' | 'copy' | '
 };
 
 /**
+ * Fetch the current torrent list
+ */
+const getTorrentList = async (): Promise<TorrentList> => {
+  const res = await request
+    .get('/api/torrents')
+    .send()
+    .set('Cookie', [authToken])
+    .set('Accept', 'application/json')
+    .expect(200)
+    .expect('Content-Type', /json/);
+
+  return res.body.torrents;
+};
+
+/**
  * Wait for torrents to complete hash checking.
  * This is needed for Transmission which doesn't support skipping verification.
  * When isCompleted: true is passed, qBittorrent uses skip_checking to skip verification,
@@ -101,23 +116,17 @@ const watchTorrentList = (op: 'add' | 'remove' | 'replace' | 'move' | 'copy' | '
  */
 const waitForTorrentsToCompleteChecking = async (hashes: string[], timeoutMs = 30000): Promise<void> => {
   const startTime = Date.now();
+  const pollInterval = 1000; // Check every second
 
   while (Date.now() - startTime < timeoutMs) {
-    const res = await request
-      .get('/api/torrents')
-      .send()
-      .set('Cookie', [authToken])
-      .set('Accept', 'application/json')
-      .expect(200)
-      .expect('Content-Type', /json/);
-
-    const torrentList: TorrentList = res.body.torrents;
+    const torrentList = await getTorrentList();
 
     const allComplete = hashes.every((hash) => {
       const torrent = torrentList[hash];
       if (!torrent) return false;
 
       // Check if torrent is no longer in checking state
+      // Transmission uses 'checking' status during hash verification
       return !torrent.status.includes('checking');
     });
 
@@ -125,8 +134,8 @@ const waitForTorrentsToCompleteChecking = async (hashes: string[], timeoutMs = 3
       return;
     }
 
-    // Wait 1 second before checking again
-    await new Promise((r) => setTimeout(r, 1000));
+    // Wait before checking again
+    await new Promise((r) => setTimeout(r, pollInterval));
   }
 
   throw new Error('Timeout waiting for torrents to complete checking');
@@ -398,14 +407,7 @@ describe('POST /api/torrents/create', () => {
         // or immediately (for other clients), the torrent should be at 100%
         if (process.argv.includes('--trurl')) {
           // Re-fetch torrent to get updated percentComplete after verification
-          const updatedRes = await request
-            .get('/api/torrents')
-            .send()
-            .set('Cookie', [authToken])
-            .set('Accept', 'application/json')
-            .expect(200);
-
-          const updatedTorrentList: TorrentList = updatedRes.body.torrents;
+          const updatedTorrentList = await getTorrentList();
           const updatedTorrent = updatedTorrentList[torrent.hash];
           expect(updatedTorrent.percentComplete).toBe(100);
         } else {
