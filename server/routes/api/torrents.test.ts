@@ -93,6 +93,45 @@ const watchTorrentList = (op: 'add' | 'remove' | 'replace' | 'move' | 'copy' | '
   });
 };
 
+/**
+ * Wait for torrents to complete hash checking.
+ * This is needed for Transmission which doesn't support skipping verification.
+ * When isCompleted: true is passed, qBittorrent uses skip_checking to skip verification,
+ * but Transmission must always verify files and cannot skip this step.
+ */
+const waitForTorrentsToCompleteChecking = async (hashes: string[], timeoutMs = 30000): Promise<void> => {
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeoutMs) {
+    const res = await request
+      .get('/api/torrents')
+      .send()
+      .set('Cookie', [authToken])
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect('Content-Type', /json/);
+
+    const torrentList: TorrentList = res.body.torrents;
+
+    const allComplete = hashes.every((hash) => {
+      const torrent = torrentList[hash];
+      if (!torrent) return false;
+
+      // Check if torrent is no longer in checking state
+      return !torrent.status.includes('checking');
+    });
+
+    if (allComplete) {
+      return;
+    }
+
+    // Wait 1 second before checking again
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+
+  throw new Error('Timeout waiting for torrents to complete checking');
+};
+
 describe('POST /api/torrents/add-urls', () => {
   const addTorrentByURLOptions: AddTorrentByURLOptions = {
     urls: torrentURLs,
@@ -344,17 +383,34 @@ describe('POST /api/torrents/create', () => {
 
     expect(addedTorrents).toHaveLength(2);
 
+    // For Transmission, wait for hash verification to complete
+    // since it doesn't support skipping verification (isCompleted parameter is not supported)
+    if (process.argv.includes('--trurl')) {
+      await waitForTorrentsToCompleteChecking(addedTorrents.map((t) => t.hash));
+    }
+
     await Promise.all(
       addedTorrents.map(async (torrent) => {
         createdTorrentHash = torrent.hash;
         expect(torrent.isPrivate).toBe(false);
 
+        // After waiting for verification to complete (for Transmission),
+        // or immediately (for other clients), the torrent should be at 100%
         if (process.argv.includes('--trurl')) {
-          // TODO: Test skipped as Transmission does not support isCompleted and isBasePath
-          return;
-        }
+          // Re-fetch torrent to get updated percentComplete after verification
+          const updatedRes = await request
+            .get('/api/torrents')
+            .send()
+            .set('Cookie', [authToken])
+            .set('Accept', 'application/json')
+            .expect(200);
 
-        expect(torrent.percentComplete).toBe(100);
+          const updatedTorrentList: TorrentList = updatedRes.body.torrents;
+          const updatedTorrent = updatedTorrentList[torrent.hash];
+          expect(updatedTorrent.percentComplete).toBe(100);
+        } else {
+          expect(torrent.percentComplete).toBe(100);
+        }
       }),
     );
   });
